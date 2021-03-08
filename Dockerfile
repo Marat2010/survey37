@@ -9,6 +9,12 @@ COPY ./survey /app
 
 WORKDIR /app
 
+## set environment variables
+# Python не будет пытаться создавать файлы .pyc
+ENV PYTHONDONTWRITEBYTECODE 1
+# видеть выходные данные своего приложения и не буферизируется
+ENV PYTHONUNBUFFERED 1
+
 COPY ./entrypoint.sh /
 ENTRYPOINT ["sh", "/entrypoint.sh"]
 

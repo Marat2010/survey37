@@ -4,21 +4,21 @@ from .models import Survey, Question, Answer, User, UserAnswer
 
 
 class SurveyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'date_start', 'date_end', 'description', 'get_questions')
+    list_display = ('pk', 'name', 'date_start', 'date_end', 'description', 'get_questions')
     list_display_links = ('name', 'description')
     search_fields = ('name', 'date_start', 'date_end', 'description')
 
 
 class QuestionAdmin(admin.ModelAdmin):
     # list_display = ('question_text', 'type_question', 'surveys', 'answers')
-    list_display = ('question_text', 'type_question', 'get_answers')
+    list_display = ('pk', 'question_text', 'type_question', 'get_answers')
     list_display_links = ('question_text', 'type_question')
     search_fields = ('question_text', 'type_question')
 
 
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ('answer',)
-    list_display_links = ('answer',)
+    list_display = ('pk', 'answer',)
+    list_display_links = ('pk', 'answer',)
     search_fields = ('answer',)
 
 
@@ -29,9 +29,9 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class UserAnswerAdmin(admin.ModelAdmin):
-    list_display = ('user', 'survey', 'question', 'answer')
-    list_display_links = ('survey', 'question')
-    search_fields = ('user', 'survey', 'question')
+    list_display = ('pk', 'user', 'survey', 'question', 'answer')
+    list_display_links = ('pk','survey', 'question')
+    search_fields = ('pk', 'user', 'survey', 'question')
 
 
 admin.site.register(Survey, SurveyAdmin)

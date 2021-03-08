@@ -22,15 +22,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'xx....xx'
 SECRET_KEY = os.getenv('SECRET_KEY')
-# print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 DEBUG = os.getenv('DEBUG')
-# print(DEBUG)
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -76,17 +73,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'survey.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
+# ---------------------------------------
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -129,3 +137,25 @@ USE_TZ = True
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_ROOT = '/static'
 STATIC_URL = '/static/'
+
+
+# -------------------------------------------------
+# ---------------------------------------
+
+# DATABASES = {
+#     "default": {
+#         # "ENGINE": 'django.db.backends.postgresql',
+#         "ENGINE": 'django.db.backends.postgresql_psycopg2',
+#         "NAME": 'postgres',
+#         "USER": 'postgres',
+#         "PASSWORD": 'postgres',
+#         # "HOST": 'db',
+#         "HOST": '192.168.0.244',
+#         "PORT": "5432",
+#     }
+# }
+
+
+# print('==== DATABASES ====', DATABASES)
+
+# -------------------------------------------------

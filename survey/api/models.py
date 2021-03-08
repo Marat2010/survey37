@@ -16,23 +16,44 @@ class Survey(models.Model):
         return ';  '.join(['{} '.format(str(question.question_text)) for question in self.questions.all()])
 
     class Meta:
+        # unique_together = ['questions', 'name']
+        unique_together = ['name']
         verbose_name_plural = 'Опросы'
         verbose_name = 'Опрос'
         ordering = ['name']
 
 
+# class QuestionManager(models.Manager):
+#     def get_queryset(self):
+#         # queryset = super(QuestionManager, self).get_queryset().filter(questions=self.kwargs['pk'])
+#         queryset = super(QuestionManager, self).get_queryset().filter(pk=4)
+#         return queryset
+
+
 class Question(models.Model):
     question_text = models.TextField(blank=True, null=True, verbose_name='Текст вопроса')
-    type_question = models.BooleanField(blank=True, null=True,
+    type_question = models.BooleanField(blank=True, null=True, default=None,
                                         verbose_name='Тип вопроса(None-вручную, '
                                                      'False-один ответ, True-несколько ответов')
-    answers = models.ManyToManyField('Answer', related_name='questions', verbose_name='Ответы')
+    # if type_question is not None:
+    answers = models.ManyToManyField('Answer', blank=True, null=True, default=None, related_name='questions', verbose_name='Ответы')
+
+    # answers = models.ForeignKey('Answer', blank=True, null=True, default=None, related_name='questions', on_delete=models.PROTECT, verbose_name='Ответы')
+
+    # answers = models.ManyToManyField('Answer', related_name='questions', verbose_name='Ответы')
+
+    # objects = models.Manager()  # The default manager.
+    # survey_objects = QuestionManager()  # The Survey-specific manager.
 
     def __str__(self):
         return self.question_text
 
+    def __repr__(self):
+        return self.question_text
+
     def get_answers(self):
         return ';  '.join(['{} '.format(str(answer.answer)) for answer in self.answers.all()])
+        # return str(self.answers)
 
     class Meta:
         verbose_name_plural = 'Вопросы'
@@ -41,7 +62,10 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answer = models.TextField(blank=True, null=True, verbose_name='Ответ')
+    answer = models.TextField(default=None, verbose_name='Ответ')
+    # answer = models.TextField(blank=True, null=True, default=None, verbose_name='Ответ')
+    # questions = models.ForeignKey(Question, related_name='answers', on_delete=models.PROTECT, verbose_name='Вопросы')
+    # questions = models.ManyToManyField(Question, blank=True, null=True, related_name='answers', verbose_name='Вопросы')
 
     def __str__(self):
         return self.answer
@@ -77,7 +101,7 @@ class UserAnswer(models.Model):
         ordering = ['pk']
 
 
-#
+# --------------------------------------------
 #     def get_surveys(self):
 #         # return ';  '.join(['{} ({})'.format(str(recr.name), recr.email) for recr in self.recruits.all()])
 #         return ';  '.join(['{} '.format(str(survey.name)) for survey in self.surveys.all()])

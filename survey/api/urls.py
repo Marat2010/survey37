@@ -1,5 +1,10 @@
-from django.urls import path
-from .views import index, SurveysListView, QuestionsListView, AnswersListView
+from django.urls import path, include
+from .views import index, SurveysListView, QuestionsListView, AnswersListView, \
+    SurveyDetailView, SurveyQuestionView, QuestionDetailView, UserAnswersViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('user', UserAnswersViewSet)
 
 app_name = 'survey users'
 urlpatterns = [
@@ -10,6 +15,15 @@ urlpatterns = [
     path('questions/', QuestionsListView.as_view()),
 
     path('answer/', AnswersListView.as_view()),
+
+    path('survey/<str:pk>/', SurveyDetailView.as_view()),
+
+    path('question/<str:pk>/', QuestionDetailView.as_view()),
+
+    path('survey/<str:pk>/questions/', SurveyQuestionView.as_view()),
+
+    # path('user/<str:pk>/questions/', UserAnswersView.as_view()),
+    path('surv/', include(router.urls)),
 
 ]
 
