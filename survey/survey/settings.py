@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+# import drf_yasg
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +26,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
+# DEBUG = False
 DEBUG = os.getenv('DEBUG')
 
 ALLOWED_HOSTS = ['*']
@@ -40,12 +42,18 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'api.apps.ApiConfig',
+    # 'drf-yasg',
+    # 'drf_yasg2',
+    'rest_framework_swagger',
+    'corsheaders',
+    'djoser'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -87,12 +95,12 @@ WSGI_APPLICATION = 'survey.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
-        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
-        "USER": os.environ.get("SQL_USER", "user"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": os.environ.get("SQL_ENGINE_SURVEY", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE_SURVEY", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER_SURVEY", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD_SURVEY", "password"),
+        "HOST": os.environ.get("SQL_HOST_SURVEY", "localhost"),
+        "PORT": os.environ.get("SQL_PORT_SURVEY", "5432"),
     }
 }
 
@@ -114,6 +122,26 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    # 'DEFAULT_RENDERER_CLASSES': [
+    #     'rest_framework.renderers.JSONRenderer',
+    #     'rest_framework.renderers.AdminRenderer',
+    #     'rest_framework.renderers.BrowsableAPIRenderer'
+    # ],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 100
+}
+
+# LOGIN_REDIRECT_URL = 'api:login'
+# LOGIN_REDIRECT_URL = 'index:api.index'
+# LOGIN_REDIRECT_URL = 'api/v1/admin/question/'
+# LOGIN_REDIRECT_URL = '../../api-admin/'
+LOGIN_REDIRECT_URL = '/api/v1/api-admin/'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -138,6 +166,13 @@ USE_TZ = True
 STATIC_ROOT = '/static'
 STATIC_URL = '/static/'
 
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://localhost:8888",
+    "http://127.0.0.1:8888"
+]
+
 
 # -------------------------------------------------
 # ---------------------------------------
@@ -154,6 +189,14 @@ STATIC_URL = '/static/'
 #         "PORT": "5432",
 #     }
 # }
+# --------------/etc/environment-----------------------------------
+# SQL_ENGINE='django.db.backends.postgresql_psycopg2'
+# SQL_DATABASE_SURVEY='surveybd'
+# SQL_USER_SURVEY='marat'
+# SQL_PASSWORD_SURVEY='091973psql16'
+# SQL_HOST_SURVEY='127.0.0.1'
+# SQL_PORT_SURVEY='5432'
+# -------------------------------------------------
 
 
 # print('==== DATABASES ====', DATABASES)
