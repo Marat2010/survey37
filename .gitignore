@@ -1,7 +1,6 @@
 venv
 .venv
 .idea
-.env
 __pycache__/
 *.pyc
 requirements_*.txt

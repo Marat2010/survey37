@@ -3,7 +3,7 @@
 python manage.py migrate --no-input
 python manage.py collectstatic --no-input
 
-gunicorn survey.wsgi:application --bind 0.0.0.0:8888
+gunicorn survey.wsgi:application --bind 0.0.0.0:8000
 
 
 #---------------------------------------------------------

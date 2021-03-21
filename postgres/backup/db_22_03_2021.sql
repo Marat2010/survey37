@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.6
--- Dumped by pg_dump version 12.6
+-- Dumped from database version 12.6 (Ubuntu 12.6-1.pgdg20.04+1)
+-- Dumped by pg_dump version 12.6 (Ubuntu 12.6-1.pgdg20.04+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -15,6 +15,20 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: adminpack; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS adminpack WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION adminpack; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION adminpack IS 'administrative functions for PostgreSQL';
+
 
 SET default_tablespace = '';
 
@@ -768,6 +782,24 @@ ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 COPY public.api_answer (id, answer) FROM stdin;
+1	Да
+2	Нет
+3	Муж.
+4	Жен.
+5	Зима
+6	Весна
+7	Лето
+8	Осень
+9	Путин
+10	Зюганов
+11	Жириновский
+12	Явлинский
+13	Медведев
+14	Николай
+15	Александр
+16	34
+17	Василий
+18	Иван
 \.
 
 
@@ -776,6 +808,14 @@ COPY public.api_answer (id, answer) FROM stdin;
 --
 
 COPY public.api_question (id, question_text, type_answer) FROM stdin;
+3	Ваш пол?	1
+1	Ваше имя?	0
+2	Ваш возраст?	0
+4	Какие времена года Вам нравиться?	2
+5	Самое холодное время года?	1
+6	Кто выиграет на выборах?	1
+7	Кому из политиков Вы доверяете?	2
+8	Почему катаклизмы в погоде?	0
 \.
 
 
@@ -784,6 +824,26 @@ COPY public.api_question (id, question_text, type_answer) FROM stdin;
 --
 
 COPY public.api_question_answers (id, question_id, answer_id) FROM stdin;
+1	3	3
+2	3	4
+3	4	8
+4	4	5
+5	4	6
+6	4	7
+7	5	8
+8	5	5
+9	5	6
+10	5	7
+11	6	9
+12	6	10
+13	6	11
+14	6	12
+15	6	13
+16	7	9
+17	7	10
+18	7	11
+19	7	12
+20	7	13
 \.
 
 
@@ -792,6 +852,9 @@ COPY public.api_question_answers (id, question_id, answer_id) FROM stdin;
 --
 
 COPY public.api_survey (id, name, date_start, date_end, description) FROM stdin;
+1	Общая информация	2021-03-21 20:53:02+03	2021-04-14 19:00:00+03	Общая информация об опрашиваемом
+2	Погода	2021-03-21 20:54:06+03	2021-04-30 20:00:00+03	Мнение о погоде
+3	Политика	2021-03-21 20:00:00+03	2021-07-21 20:00:00+03	О политике и выборах
 \.
 
 
@@ -800,6 +863,14 @@ COPY public.api_survey (id, name, date_start, date_end, description) FROM stdin;
 --
 
 COPY public.api_survey_questions (id, survey_id, question_id) FROM stdin;
+1	1	1
+2	1	2
+3	1	3
+4	2	1
+5	2	4
+6	2	5
+7	3	6
+8	3	7
 \.
 
 
@@ -810,6 +881,15 @@ COPY public.api_survey_questions (id, survey_id, question_id) FROM stdin;
 COPY public.api_user (id, name) FROM stdin;
 1	AnonymousUser
 2	AnonymousUser
+3	AnonymousUser
+4	AnonymousUser
+5	adm
+6	api
+7	AnonymousUser
+8	AnonymousUser
+9	AnonymousUser
+10	AnonymousUser
+11	AnonymousUser
 \.
 
 
@@ -818,6 +898,20 @@ COPY public.api_user (id, name) FROM stdin;
 --
 
 COPY public.api_useranswer (id, question_id, survey_id, user_id) FROM stdin;
+1	1	2	5
+2	4	2	5
+3	5	2	5
+4	1	1	6
+5	2	1	6
+6	3	1	6
+7	6	3	6
+8	7	3	6
+9	1	2	6
+10	4	2	6
+11	5	2	6
+12	1	2	8
+13	4	2	8
+14	5	2	8
 \.
 
 
@@ -826,6 +920,23 @@ COPY public.api_useranswer (id, question_id, survey_id, user_id) FROM stdin;
 --
 
 COPY public.api_useranswer_answer (id, useranswer_id, answer_id) FROM stdin;
+1	1	14
+2	2	6
+3	2	7
+4	3	5
+5	4	15
+6	5	16
+7	6	3
+8	7	9
+9	8	10
+10	8	11
+11	8	12
+12	9	17
+13	10	7
+14	11	5
+15	12	18
+16	13	7
+17	14	5
 \.
 
 
@@ -902,7 +1013,10 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 --
 
 COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$150000$LlyK3yHl7luS$DRbOk5ImfYu5vd+dHMT5hJdDUsTAWL7e8TsGRmfzf4A=	2021-03-20 10:51:53.360469+00	t	admin			adm@localhost	t	t	2021-03-20 10:51:42.938598+00
+1	pbkdf2_sha256$150000$16qyWIbFsfOC$sv35c/s4Z+D6J0R5Mg5JB6d01mVpCOIMp8CQ1QNtD/4=	2021-03-21 20:39:47.16735+03	t	admin			adm@localhost	t	t	2021-03-21 04:02:48.344796+03
+4	pbkdf2_sha256$150000$qjkq2N0yvbIm$P4cMfAlCEmLR9meSW9x/OSUxtogGY02cvtkbxjTkPEI=	2021-03-21 21:34:27.627994+03	f	adm			adm@localhost	t	t	2021-03-21 21:25:10+03
+5	pbkdf2_sha256$150000$MPkwaomeajUc$o4D50jHEqan1kRPgxPT5B09j0nrBMIN8PfbwCluEmcY=	2021-03-21 21:41:38.174949+03	f	api				f	t	2021-03-21 21:26:34+03
+2	pbkdf2_sha256$150000$JrH6dlTlDSVD$yoLyQEKC5ZjcV3sbDQBsBVu4/Hk8uVyfhLNnTY2VA40=	2021-03-21 21:43:00.622939+03	t	marat			marat@localhost	t	t	2021-03-21 04:03:21.52813+03
 \.
 
 
@@ -919,6 +1033,46 @@ COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 --
 
 COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+21	4	25
+22	4	26
+23	4	27
+24	4	28
+25	4	29
+26	4	30
+27	4	31
+28	4	32
+29	4	33
+30	4	34
+31	4	35
+32	4	36
+33	4	37
+34	4	38
+35	4	39
+36	4	40
+37	4	41
+38	4	42
+39	4	43
+40	4	44
+41	5	25
+42	5	26
+43	5	27
+44	5	28
+45	5	29
+46	5	30
+47	5	31
+48	5	32
+49	5	33
+50	5	34
+51	5	35
+52	5	36
+53	5	37
+54	5	38
+55	5	39
+56	5	40
+57	5	41
+58	5	42
+59	5	43
+60	5	44
 \.
 
 
@@ -927,6 +1081,32 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2021-03-21 20:43:54.141614+03	1	Да	1	[{"added": {}}]	9	1
+2	2021-03-21 20:43:58.144426+03	2	Нет	1	[{"added": {}}]	9	1
+3	2021-03-21 20:44:04.420076+03	3	Муж.	1	[{"added": {}}]	9	1
+4	2021-03-21 20:44:15.284921+03	4	Жен.	1	[{"added": {}}]	9	1
+5	2021-03-21 20:44:23.02909+03	5	Зима	1	[{"added": {}}]	9	1
+6	2021-03-21 20:44:27.237274+03	6	Весна	1	[{"added": {}}]	9	1
+7	2021-03-21 20:44:32.824025+03	7	Лето	1	[{"added": {}}]	9	1
+8	2021-03-21 20:45:16.626779+03	8	Осень	1	[{"added": {}}]	9	1
+9	2021-03-21 20:46:27.012356+03	2	0 - Ваш возраст	2	[{"changed": {"fields": ["type_answer"]}}]	7	1
+10	2021-03-21 20:47:38.553858+03	1	0 - Ваше имя?	2	[{"changed": {"fields": ["question_text"]}}]	7	1
+11	2021-03-21 20:47:45.064115+03	2	0 - Ваш возраст?	2	[{"changed": {"fields": ["question_text"]}}]	7	1
+12	2021-03-21 20:53:57.945562+03	1	1: Общая информация	1	[{"added": {}}]	8	1
+13	2021-03-21 20:55:11.147419+03	2	2: Погода	1	[{"added": {}}]	8	1
+14	2021-03-21 20:55:27.886872+03	2	2: Погода	2	[{"changed": {"fields": ["description"]}}]	8	1
+15	2021-03-21 21:04:47.123703+03	9	Путин	1	[{"added": {}}]	9	1
+16	2021-03-21 21:05:00.264646+03	10	Зюганов	1	[{"added": {}}]	9	1
+17	2021-03-21 21:05:31.461203+03	11	Жириновский	1	[{"added": {}}]	9	1
+18	2021-03-21 21:06:32.373653+03	12	Явлинский	1	[{"added": {}}]	9	1
+19	2021-03-21 21:06:47.939958+03	13	Медведев	1	[{"added": {}}]	9	1
+20	2021-03-21 21:14:18.716277+03	3	3: Политика	2	[{"changed": {"fields": ["questions"]}}]	8	1
+21	2021-03-21 21:21:25.341565+03	8	0 - Почему катаклизмы в погоде?	1	[{"added": {}}]	7	1
+22	2021-03-21 21:22:42.760005+03	3	api	1	[{"added": {}}]	4	1
+23	2021-03-21 21:23:14.36815+03	3	api	2	[{"changed": {"fields": ["user_permissions"]}}]	4	1
+24	2021-03-21 21:25:35.69402+03	4	adm	2	[{"changed": {"fields": ["is_superuser", "user_permissions"]}}]	4	1
+25	2021-03-21 21:26:19.328226+03	3	api	3		4	1
+26	2021-03-21 21:26:59.257283+03	5	api	2	[{"changed": {"fields": ["is_staff", "is_superuser", "user_permissions"]}}]	4	1
 \.
 
 
@@ -954,53 +1134,55 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2021-03-20 10:47:18.649547+00
-2	auth	0001_initial	2021-03-20 10:47:18.754498+00
-3	admin	0001_initial	2021-03-20 10:47:18.880399+00
-4	admin	0002_logentry_remove_auto_add	2021-03-20 10:47:18.921241+00
-5	admin	0003_logentry_add_action_flag_choices	2021-03-20 10:47:18.94495+00
-6	api	0001_initial	2021-03-20 10:47:19.106633+00
-7	api	0002_auto_20210304_2013	2021-03-20 10:47:19.421432+00
-8	api	0003_auto_20210304_2131	2021-03-20 10:47:19.520537+00
-9	api	0004_auto_20210304_2159	2021-03-20 10:47:19.578653+00
-10	api	0005_auto_20210304_2250	2021-03-20 10:47:19.651171+00
-11	api	0006_user	2021-03-20 10:47:19.68953+00
-12	api	0007_auto_20210304_2327	2021-03-20 10:47:19.707361+00
-13	api	0008_auto_20210304_2331	2021-03-20 10:47:19.726427+00
-14	api	0009_auto_20210304_2333	2021-03-20 10:47:19.741239+00
-15	api	0010_auto_20210304_2334	2021-03-20 10:47:19.751705+00
-16	api	0011_useranswer	2021-03-20 10:47:19.786561+00
-17	api	0012_auto_20210305_0220	2021-03-20 10:47:19.928318+00
-18	api	0013_auto_20210305_0259	2021-03-20 10:47:19.960799+00
-19	api	0014_auto_20210306_0207	2021-03-20 10:47:20.017489+00
-20	api	0015_auto_20210306_2355	2021-03-20 10:47:20.044501+00
-21	api	0016_auto_20210307_1859	2021-03-20 10:47:20.103654+00
-22	api	0017_auto_20210307_1901	2021-03-20 10:47:20.166959+00
-23	api	0018_auto_20210307_1903	2021-03-20 10:47:20.210466+00
-24	api	0019_auto_20210307_1905	2021-03-20 10:47:20.259152+00
-25	api	0020_auto_20210307_1906	2021-03-20 10:47:20.324455+00
-26	api	0021_auto_20210307_1919	2021-03-20 10:47:20.368589+00
-27	api	0022_auto_20210307_1930	2021-03-20 10:47:20.408701+00
-28	api	0023_auto_20210307_1932	2021-03-20 10:47:20.48022+00
-29	api	0024_auto_20210307_1948	2021-03-20 10:47:20.537858+00
-30	api	0025_auto_20210307_2000	2021-03-20 10:47:20.581265+00
-31	api	0026_auto_20210311_1948	2021-03-20 10:47:20.614971+00
-32	api	0027_auto_20210311_2014	2021-03-20 10:47:20.895276+00
-33	api	0028_auto_20210312_1228	2021-03-20 10:47:20.944163+00
-34	api	0029_auto_20210312_1943	2021-03-20 10:47:21.037522+00
-35	api	0030_auto_20210320_0108	2021-03-20 10:47:21.121632+00
-36	contenttypes	0002_remove_content_type_name	2021-03-20 10:47:21.212129+00
-37	auth	0002_alter_permission_name_max_length	2021-03-20 10:47:21.229+00
-38	auth	0003_alter_user_email_max_length	2021-03-20 10:47:21.256942+00
-39	auth	0004_alter_user_username_opts	2021-03-20 10:47:21.283221+00
-40	auth	0005_alter_user_last_login_null	2021-03-20 10:47:21.30961+00
-41	auth	0006_require_contenttypes_0002	2021-03-20 10:47:21.316218+00
-42	auth	0007_alter_validators_add_error_messages	2021-03-20 10:47:21.349063+00
-43	auth	0008_alter_user_username_max_length	2021-03-20 10:47:21.386693+00
-44	auth	0009_alter_user_last_name_max_length	2021-03-20 10:47:21.414062+00
-45	auth	0010_alter_group_name_max_length	2021-03-20 10:47:21.443363+00
-46	auth	0011_update_proxy_permissions	2021-03-20 10:47:21.481736+00
-47	sessions	0001_initial	2021-03-20 10:47:21.504411+00
+1	contenttypes	0001_initial	2021-03-21 03:41:53.912427+03
+2	auth	0001_initial	2021-03-21 03:41:54.011392+03
+3	admin	0001_initial	2021-03-21 03:41:54.137673+03
+4	admin	0002_logentry_remove_auto_add	2021-03-21 03:41:54.178308+03
+5	admin	0003_logentry_add_action_flag_choices	2021-03-21 03:41:54.200775+03
+6	api	0001_initial	2021-03-21 03:41:54.349232+03
+7	api	0002_auto_20210304_2013	2021-03-21 03:41:54.638288+03
+8	api	0003_auto_20210304_2131	2021-03-21 03:41:54.724679+03
+9	api	0004_auto_20210304_2159	2021-03-21 03:41:54.769905+03
+10	api	0005_auto_20210304_2250	2021-03-21 03:41:54.839262+03
+11	api	0006_user	2021-03-21 03:41:54.879359+03
+12	api	0007_auto_20210304_2327	2021-03-21 03:41:54.896671+03
+13	api	0008_auto_20210304_2331	2021-03-21 03:41:54.914234+03
+14	api	0009_auto_20210304_2333	2021-03-21 03:41:54.928188+03
+15	api	0010_auto_20210304_2334	2021-03-21 03:41:54.938281+03
+16	api	0011_useranswer	2021-03-21 03:41:54.97262+03
+17	api	0012_auto_20210305_0220	2021-03-21 03:41:55.102088+03
+18	api	0013_auto_20210305_0259	2021-03-21 03:41:55.131385+03
+19	api	0014_auto_20210306_0207	2021-03-21 03:41:55.177314+03
+20	api	0015_auto_20210306_2355	2021-03-21 03:41:55.196888+03
+21	api	0016_auto_20210307_1859	2021-03-21 03:41:55.248206+03
+22	api	0017_auto_20210307_1901	2021-03-21 03:41:55.310245+03
+23	api	0018_auto_20210307_1903	2021-03-21 03:41:55.349257+03
+24	api	0019_auto_20210307_1905	2021-03-21 03:41:55.395088+03
+25	api	0020_auto_20210307_1906	2021-03-21 03:41:55.456683+03
+26	api	0021_auto_20210307_1919	2021-03-21 03:41:55.500134+03
+27	api	0022_auto_20210307_1930	2021-03-21 03:41:55.538286+03
+28	api	0023_auto_20210307_1932	2021-03-21 03:41:55.606329+03
+29	api	0024_auto_20210307_1948	2021-03-21 03:41:55.655445+03
+30	api	0025_auto_20210307_2000	2021-03-21 03:41:55.698556+03
+31	api	0026_auto_20210311_1948	2021-03-21 03:41:55.728475+03
+32	api	0027_auto_20210311_2014	2021-03-21 03:41:55.982411+03
+33	api	0028_auto_20210312_1228	2021-03-21 03:41:56.023157+03
+34	api	0029_auto_20210312_1943	2021-03-21 03:41:56.105063+03
+35	api	0030_auto_20210320_0108	2021-03-21 03:41:56.178309+03
+36	api	0031_auto_20210321_0017	2021-03-21 03:41:56.247078+03
+37	api	0032_auto_20210321_0046	2021-03-21 03:41:56.294703+03
+38	contenttypes	0002_remove_content_type_name	2021-03-21 03:41:56.356561+03
+39	auth	0002_alter_permission_name_max_length	2021-03-21 03:41:56.372635+03
+40	auth	0003_alter_user_email_max_length	2021-03-21 03:41:56.3995+03
+41	auth	0004_alter_user_username_opts	2021-03-21 03:41:56.429863+03
+42	auth	0005_alter_user_last_login_null	2021-03-21 03:41:56.454272+03
+43	auth	0006_require_contenttypes_0002	2021-03-21 03:41:56.462236+03
+44	auth	0007_alter_validators_add_error_messages	2021-03-21 03:41:56.484116+03
+45	auth	0008_alter_user_username_max_length	2021-03-21 03:41:56.518177+03
+46	auth	0009_alter_user_last_name_max_length	2021-03-21 03:41:56.544405+03
+47	auth	0010_alter_group_name_max_length	2021-03-21 03:41:56.572441+03
+48	auth	0011_update_proxy_permissions	2021-03-21 03:41:56.606421+03
+49	sessions	0001_initial	2021-03-21 03:41:56.630494+03
 \.
 
 
@@ -1009,9 +1191,13 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-r9i467rlnimccd9hdbl3pb2lknk8p06p	MGUwNGE2NGM2OTI1ODYyMjhjNzU3NjE0NGQ0Y2RmMWVlNzkwZWVkZTp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI3NWY5MThlMWEwOTMxYzRlMzU0OWU3ZWYxMjhmZmI3ZWU2OGY2Y2NmIn0=	2021-04-03 10:51:53.367362+00
-2y77g3n7o434nlwnhrsyzkvu3e5nk5tu	MWE4NGVhNTRhZDgzM2RjYjJkOTM0MzRkNDI0M2QyMmJkOTc5YzgzZTp7InVzZXJfc2Vzc2lvbiI6MX0=	2021-04-03 10:52:08.283627+00
-dmchsdquwa65xnhe2har07yb44bj1dfu	YWUwNjc3ODE4NTE5YmI2ZjA3MjljYTUwNjU5ZDgxMmI5Y2ZiNGJhYzp7InVzZXJfc2Vzc2lvbiI6Mn0=	2021-04-03 11:11:26.633506+00
+8ohirdh5ehp03162ngedo3vjchsn8bvj	YmMxNGM1MDk1MjdiYjFkMjUzMGI4MTM1MmI5NjhjZWE3MDI4ZjdjMjp7InVzZXJfc2Vzc2lvbiI6MSwiX2F1dGhfdXNlcl9pZCI6IjEiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjBmZWU2NTc2OTMyNjRhYjg5NjZjODQyZjkyZmU1MDkzYWE1NjIyOGIifQ==	2021-04-04 04:03:33.722004+03
+hfumfcnbx9tezqg00qu2ahsh9obfvboh	NmVjY2RkZjFhODhkMmY4ODc5YzIyMGM2ZWRmZDFjNDU0NGY0ZmZiNjp7InVzZXJfc2Vzc2lvbiI6M30=	2021-04-04 20:38:20.422492+03
+g83udie199cz61s545rmgbrw2q9vgpbb	MmI2Njc5OTg0NDM4NGQ5YjYzMjAyZjI5YWUyZTNkZWJiNTFlMDU0Zjp7InVzZXJfc2Vzc2lvbiI6NywiX2F1dGhfdXNlcl9pZCI6IjIiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZCIsIl9hdXRoX3VzZXJfaGFzaCI6IjUzODJjMDNhOWZhMzg0MWEwNjRhYjkxNjc4NDgwNWQyZTEyNWZiMDEifQ==	2021-04-04 21:43:00.628374+03
+hhxqs27565o3i3aec5c34jkz79cwn1cq	NDQ0ODcxMGQ0YmRhOGU5NWM1YmQzMGJkMjIyZmMzYWQwNjM2M2RkODp7InVzZXJfc2Vzc2lvbiI6OH0=	2021-04-04 21:43:55.31545+03
+ivqif5zrt872dqf39mujv1r27oncnzda	NzIzOWZiOGExNTdkOTQyMWQ1MjNiZjU2YjdiZjkwNjU2YjhkZDEwZTp7InVzZXJfc2Vzc2lvbiI6OX0=	2021-04-04 22:45:00.24145+03
+6eor5omrvwf61cuh6w03zh5aqee2uglk	MzcxY2RlMzRhOTliNDdlNzI5MjU4NmIzNjAyMzM2ZTA3NjQ4YTkwODp7InVzZXJfc2Vzc2lvbiI6MTB9	2021-04-04 23:26:37.010722+03
+jh4yeddeo78z8wf96yw36w679o74mny3	ZTc1MThlZTM3YWQ5MzcwYmIzNjhlNjdmZTg0NzJmZmQzMWM1OTQwZDp7InVzZXJfc2Vzc2lvbiI6MTF9	2021-04-04 23:30:55.165541+03
 \.
 
 
@@ -1019,56 +1205,56 @@ dmchsdquwa65xnhe2har07yb44bj1dfu	YWUwNjc3ODE4NTE5YmI2ZjA3MjljYTUwNjU5ZDgxMmI5Y2Z
 -- Name: api_answer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_answer_id_seq', 1, false);
+SELECT pg_catalog.setval('public.api_answer_id_seq', 18, true);
 
 
 --
 -- Name: api_question_answers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_question_answers_id_seq', 1, false);
+SELECT pg_catalog.setval('public.api_question_answers_id_seq', 20, true);
 
 
 --
 -- Name: api_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_question_id_seq', 1, false);
+SELECT pg_catalog.setval('public.api_question_id_seq', 8, true);
 
 
 --
 -- Name: api_survey_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_survey_id_seq', 1, false);
+SELECT pg_catalog.setval('public.api_survey_id_seq', 3, true);
 
 
 --
 -- Name: api_survey_questions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_survey_questions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.api_survey_questions_id_seq', 8, true);
 
 
 --
 -- Name: api_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_user_id_seq', 2, true);
+SELECT pg_catalog.setval('public.api_user_id_seq', 11, true);
 
 
 --
 -- Name: api_useranswer_answer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_useranswer_answer_id_seq', 1, false);
+SELECT pg_catalog.setval('public.api_useranswer_answer_id_seq', 17, true);
 
 
 --
 -- Name: api_useranswer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.api_useranswer_id_seq', 1, false);
+SELECT pg_catalog.setval('public.api_useranswer_id_seq', 14, true);
 
 
 --
@@ -1103,21 +1289,21 @@ SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 1, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 5, true);
 
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 60, true);
 
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 26, true);
 
 
 --
@@ -1131,7 +1317,7 @@ SELECT pg_catalog.setval('public.django_content_type_id_seq', 11, true);
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 47, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 49, true);
 
 
 --

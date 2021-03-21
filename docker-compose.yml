@@ -8,8 +8,10 @@ services:
       - .env
     build:
       context: .
-    expose:
-      - "8888"
+#    expose:
+#      - "8000"
+    ports:
+      - "8000:8000"
     depends_on:
       - db
       - nginx
@@ -21,8 +23,11 @@ services:
     build: ./nginx
     volumes:
       - static:/static
-    ports:
-      - "8888:8888"
+#    ports:
+#      - "8000"
+#      - "8000:8000"
+    expose:
+      - "8000"
     depends_on:
       - db
     networks:
@@ -62,6 +67,7 @@ networks:
       config:
         - subnet: 192.168.0.240/28
 
+#--------------------------------------
 #---------------------------------------
 #          ip_range: 192.168.0.240/28
 #          gateway: 192.168.0.241

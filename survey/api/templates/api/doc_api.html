@@ -16,18 +16,18 @@
 <div align="justify">
 {#    <h4>Корневой URL:&nbsp;&nbsp;&nbsp; api/v1/</h4>#}
     <h4>Корневой URL:&nbsp;&nbsp;&nbsp;
-        <a href="http://127.0.0.1:8888/api/v1/surveys/" target="_blank">api/v1/</a>
+        <a href="{{ host }}/api/v1/surveys/" target="_blank">api/v1/</a>
     </h4>
 
     <h4>Функционал для администратора системы: </h4>
     <ul>
         <li> авторизация в системе (регистрация не нужна (польз: api, пароль: api2021api)) <br>
             через Login API-Admin:
-            <a href="http://127.0.0.1:8888/api/v1/api-auth/login/" target="_blank">./api-auth/login/</a>
+            <a href="{{ host }}/api/v1/api-auth/login/" target="_blank">./api-auth/login/</a>
         </li>
         <br>
         <li> Корнень для администратора
-             <a href="http://127.0.0.1:8888/api/v1/api-admin/" target="_blank">./api-admin/</a>
+             <a href="{{ host }}/api/v1/api-admin/" target="_blank">./api-admin/</a>
             <br>
             Все ссылки для опросов, вопросов и ответов на этой странице.
         </li>
@@ -59,7 +59,7 @@
     <ul>
         <li>
             <p>получение списка активных опросов:
-                 <a href="http://127.0.0.1:8888/api/v1/surveys/" target="_blank">./surveys/</a>
+                 <a href="{{ host }}/api/v1/surveys/" target="_blank">./surveys/</a>
             </p>
         </li>
         <li>
@@ -70,7 +70,7 @@
             </p>
             <p>
                 Прохождение опроса по ./survey/<номер_ID_опроса>/ например по
-                <a href="http://127.0.0.1:8888/api/v1/survey/1/" target="_blank">./survey/1/</a>
+                <a href="{{ host }}/api/v1/survey/1/" target="_blank">./survey/1/</a>
                 (survey без <b>S</b>)
             </p>
         </li>
@@ -105,10 +105,10 @@
     </ul>
 
     <div style='text-align:center; width:100%'>
-        <a href="http://127.0.0.1:8888/api/v1/surveys/" target="_blank">В API</a>
+        <a href="{{ host }}/api/v1/surveys/" target="_blank">В API</a>
     </div>
     <div style='text-align:center; width:100%'>
-        <a href="http://127.0.0.1:8888/api/v1/doc/">Задача по API</a>
+        <a href="{{ host }}/api/v1/doc/">Задача по API</a>
     </div>
     <hr>
 </div>

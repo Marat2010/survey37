@@ -15,17 +15,18 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from .utils import check_user_session, check_answers
+MY_HOST = "http://localhost"
 
 
 # ------------- Section Start page and documentation -----------------
 
 def index(request):
     check_user_session(request)
-    return render(request, 'api/index.html')
+    return render(request, 'api/index.html', {"host": MY_HOST})
 
 
 def doc_api(request):
-    return render(request, 'api/doc_api.html')
+    return render(request, 'api/doc_api.html', {"host": MY_HOST})
 
 
 # -------------- Admin section --------------------------------------

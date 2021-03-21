@@ -8,7 +8,7 @@ from .views import AnswerViewSet, QuestionViewSet, SurveyViewSet,\
 from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
-router.register('answer', AnswerViewSet)
+# router.register('answer', AnswerViewSet)
 router.register('question', QuestionViewSet)
 router.register('survey', SurveyViewSet)
 
