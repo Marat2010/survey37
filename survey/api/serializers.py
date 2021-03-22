@@ -102,6 +102,19 @@ class SurveySerializer(serializers.ModelSerializer):
         model = Survey
         fields = ('id', 'url', 'name', 'date_start', 'date_end', 'description', 'questions')
 
+
+class UserAnswerSerializer(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=False)
+    survey = serializers.StringRelatedField(read_only=False)
+    question = serializers.StringRelatedField(read_only=False)
+    answer = AnswerSerializer(many=True, queryset=Answer.objects.all())
+    # answer = serializers.StringRelatedField(read_only=False)
+    # question = QuestionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = UserAnswer
+        fields = ('id', 'url', 'user', 'survey', 'question', 'answer')
+
 # -------------- Admin section end-----------------------------------
 
 

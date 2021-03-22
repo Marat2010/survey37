@@ -3,7 +3,7 @@ from .views import index, doc_api
     # SurveysListView, QuestionsListView, AnswersListView, \
     # SurveyDetailView, SurveyQuestionView, QuestionDetailView, UserAnswersViewSet
 
-from .views import AnswerViewSet, QuestionViewSet, SurveyViewSet,\
+from .views import AnswerViewSet, QuestionViewSet, SurveyViewSet, UserAnswerViewSet,\
     SurveyListView, SurveyDetailView
 from rest_framework.routers import DefaultRouter
 
@@ -11,6 +11,7 @@ router = DefaultRouter()
 # router.register('answer', AnswerViewSet)
 router.register('question', QuestionViewSet)
 router.register('survey', SurveyViewSet)
+router.register('user_answer', UserAnswerViewSet)
 
 urlpatterns = [
     path('doc/', index, name='index'),

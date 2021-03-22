@@ -4,5 +4,5 @@ FROM  postgres:12.6-alpine
 # (чтобы не создавать суперпользоватяля для django)
 
 # ADD ./backup/DB.sql /docker-entrypoint-initdb.d
-ADD ./backup/DB.sql /docker-entrypoint-initdb.
+ADD ./backup/DB.sql /docker-entrypoint-initdb.d
 

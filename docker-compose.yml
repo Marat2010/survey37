@@ -15,9 +15,9 @@ services:
     depends_on:
       - db
       - nginx
-    networks:
-      net1:
-        ipv4_address: 192.168.0.242
+#    networks:
+#      net1:
+#        ipv4_address: 192.168.0.242
 
   nginx:
     build: ./nginx
@@ -30,9 +30,9 @@ services:
       - "8000"
     depends_on:
       - db
-    networks:
-      net1:
-        ipv4_address: 192.168.0.243
+#    networks:
+#      net1:
+#        ipv4_address: 192.168.0.243
 
   db:
     build: ./postgres
@@ -43,29 +43,29 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
-    networks:
-      net1:
-        ipv4_address: 192.168.0.244
+#    networks:
+#      net1:
+#        ipv4_address: 192.168.0.244
 
   db_adminer:
     image: adminer:4.8.0
     restart: always
     ports:
       - 9000:8080
-    networks:
-      net1:
-        ipv4_address: 192.168.0.245
+#    networks:
+#      net1:
+#        ipv4_address: 192.168.0.245
 
 volumes:
   static:
   postgres_data:
 
-networks:
-  net1:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.0.240/28
+#networks:
+#  net1:
+#    driver: bridge
+#    ipam:
+#      config:
+#        - subnet: 192.168.0.240/28
 
 #--------------------------------------
 #---------------------------------------
@@ -88,6 +88,8 @@ networks:
 #---------------------------------------
 #    ports:
 #      - "8888:8888"
+#    ports:
+#      - 5435:5432
 #--------------------------
 #    build: ./postgres
 #      context: ./postgres/

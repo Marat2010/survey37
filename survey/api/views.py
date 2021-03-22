@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication, BasicAuthentication, SessionAuthentication
-from .serializers import SurveySerializer, QuestionSerializer, AnswerSerializer,\
+from .serializers import SurveySerializer, QuestionSerializer, AnswerSerializer, UserAnswerSerializer,\
     SurveyListSerializer, SurveyDetailSerializer, QuestionsListSerializer, UserAnswerDetailSerializer
 from .models import Survey, Question, Answer, User, UserAnswer
 from django.utils import timezone
@@ -15,7 +15,7 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication, BasicAuthentication
 from .utils import check_user_session, check_answers
-MY_HOST = "http://localhost"
+MY_HOST = "http://localhost:8000"  # for index and doc_api in docker
 
 
 # ------------- Section Start page and documentation -----------------
@@ -51,6 +51,14 @@ class SurveyViewSet(ModelViewSet):
     """ Displaying a list of all surveys for admin"""
     queryset = Survey.objects.all()
     serializer_class = SurveySerializer
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = (IsAuthenticated,)
+
+
+class UserAnswerViewSet(ModelViewSet):
+    """ Displaying a list User answers for admin"""
+    queryset = UserAnswer.objects.all()
+    serializer_class = UserAnswerSerializer
     authentication_classes = [SessionAuthentication, BasicAuthentication]
     permission_classes = (IsAuthenticated,)
 
