@@ -38,7 +38,7 @@ Login API-Admin: http://localhost:8000/api/v1/api-auth/login/
 
 Админ Django: http://localhost:8000/admin/
 
-Доступ к админеру БД порт `"9000"`: http://localhost:9000/
+Доступ к Adminer БД порт `"9000"`: http://localhost:9000/
 
 -------------------------------------------
 #### Остановка контейнеров:
