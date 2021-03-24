@@ -6,22 +6,26 @@ from .models import Survey, Question, Answer, User, UserAnswer
 
 class SurveyAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'date_start', 'date_end', 'description', 'get_questions')
-    list_display_links = ('name', 'description')
+    list_display_links = ('pk', 'name', 'description',)
     search_fields = ('name', 'date_start', 'date_end', 'description')
+    list_filter = ('date_start', 'date_end',)
+    # readonly_fields = ('date_start', 'date_end',)
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    # list_display = ('question_text', 'type_question', 'surveys', 'answers')
-    # list_display = ('pk', 'question_text', 'type_question', 'get_answers')
     list_display = ('pk', 'question_text', 'type_answer', 'get_answers')
-    list_display_links = ('pk', 'question_text', 'type_answer')
+    list_display_links = ('pk', 'question_text',)
     search_fields = ('pk', 'question_text', 'type_answer')
+    list_filter = ('type_answer',)
+    list_editable = ('type_answer',)
+    list_per_page = 20
 
 
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ('pk', 'answer',)
     list_display_links = ('pk', 'answer',)
     search_fields = ('answer',)
+    list_per_page = 20
 
 
 class UserAdmin(admin.ModelAdmin):
